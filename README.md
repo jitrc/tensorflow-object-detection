@@ -19,6 +19,6 @@ make docker-run-jupyter
 
 Test
 ```
-make docker-run-cmd CMD="python /home/models/research/object_detection/builders/model_builder_tf1_test.py"
+make docker-run-cmd CMD="python /tensorflow/models/research/object_detection/builders/model_builder_test.py"
 ```
 
