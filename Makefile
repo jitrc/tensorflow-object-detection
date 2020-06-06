@@ -8,17 +8,17 @@ DOCKER_IMAGE ?= ${PROJECT}:${DOCKER_TAG}
 SHMSIZE ?= 32G
 
 DOCKER_OPTS := \
-	    --name ${PROJECT} \
-	    --rm -it \
-	    --shm-size=${SHMSIZE} \
-	    --gpus all \
-	    -v /data:/data \
-            -v /media:/media \
-	    -v ${PWD}:${WORKSPACE} \
-	    -w ${WORKSPACE} \
-	    --privileged \
-	    --ipc=host \
-	    --network=host
+		--name ${PROJECT} \
+		--rm -it \
+		--shm-size=${SHMSIZE} \
+		--gpus all \
+		-v /data:/data \
+		-v /media:/media \
+		-v ${PWD}:${WORKSPACE} \
+		-w ${WORKSPACE} \
+		--privileged \
+		--ipc=host \
+		--network=host
 
 .PHONY: all clean docker-build 
 
@@ -30,7 +30,7 @@ clean:
 
 docker-build:
 	docker build \
-	    --build-arg FROM_IMAGE_NAME=${DOCKER_BASE_IMG} \
+		--build-arg FROM_IMAGE_NAME=${DOCKER_BASE_IMG} \
 		-f docker/Dockerfile \
 		-t ${DOCKER_IMAGE} .
 
