@@ -59,3 +59,5 @@ docker-run-cmd: docker-build
 	docker run ${DOCKER_OPTS} ${DOCKER_IMAGE} \
 		bash -c "${CMD}"
 
+docker-exec-bash:
+	docker exec -it ${PROJECT} bash
