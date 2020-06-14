@@ -2,9 +2,13 @@ PROJECT ?= tensorflow-object-detection
 MOUNT_WORKSPACE_TO ?= /home/
 
 TF_MODEL_BRANCH ?= r1.13.0
-DOCKER_TAG ?= 1.13.2-gpu-py3  # latest-py3, 2.0.0-gpu-py3, 1.14.0-gpu-py3
+DOCKER_TAG ?= 1.13.2-gpu-py3# latest-py3, 2.0.0-gpu-py3, 1.14.0-gpu-py3
 DOCKER_BASE_IMG ?=tensorflow/tensorflow:${DOCKER_TAG}
-DOCKER_IMAGE ?= ${PROJECT}:${DOCKER_TAG}
+
+TORCH_VERSION ?= 1.4.0+cu100 #1.3.1+cu100, 1.4.0+cu100, 1.5.0+cu101
+TORCHVISION_VERSION ?= 0.5.0+cu100 #0.4.2+cu100, 0.5.0+cu100, 0.6.0+cu101
+
+DOCKER_IMAGE ?= ${PROJECT}:tf-${DOCKER_TAG}-pt-$(subst +,-,${TORCH_VERSION})
 
 CURRENT_UID := $(shell id -u)
 CURRENT_GID := $(shell id -g)
@@ -41,6 +45,8 @@ docker-build:
 	docker build \
 		--build-arg FROM_IMAGE_NAME=${DOCKER_BASE_IMG} \
 		--build-arg TF_MODEL_BRANCH=${TF_MODEL_BRANCH} \
+		--build-arg TORCH_VERSION=${TORCH_VERSION} \
+		--build-arg TORCHVISION_VERSION=${TORCHVISION_VERSION} \
 		-f docker/Dockerfile \
 		-t ${DOCKER_IMAGE} .
 

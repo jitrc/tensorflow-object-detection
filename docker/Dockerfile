@@ -60,6 +60,20 @@ ENV PYTHONPATH $PYTHONPATH:/tensorflow/models/research:/tensorflow/models/resear
 ENV TF_OBJECT_DETECTION_API /tensorflow/models/research/object_detection
 
 
+# Install Pytorch
+ARG TORCH_VERSION=1.5.0+cu101
+ARG TORCHVISION_VERSION=0.5.0+cu100
+RUN pip install --no-cache-dir \
+   torch==${TORCH_VERSION}  \
+   torchvision==${TORCHVISION_VERSION} \
+   -f https://download.pytorch.org/whl/torch_stable.html
+
+# Install Fastai
+RUN pip install --no-cache-dir \
+  fastai ipywidgets
+
+
+
 WORKDIR /home
 EXPOSE 8888
 CMD ["jupyter", "lab", "--allow-root","--NotebookApp.token=''", "--notebook-dir=/home/", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
